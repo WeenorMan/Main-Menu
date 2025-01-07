@@ -1,12 +1,19 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
+    [SerializeField] AudioMixer mixer;
+
     public AudioClip[] clips;
     AudioSource audioSource;
+
+    public const string MASTER_KEY = "Volume";
+    public const string MUSIC_KEY = "musicVolume";
+    public const string SFX_KEY = "sfxVolume";
 
     private void Awake()
     {
@@ -24,6 +31,8 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        LoadVolume();
+
     }
 
     public void PlayClip(int clipNumber)
@@ -38,7 +47,16 @@ public class LevelManager : MonoBehaviour
         audioSource.Stop(); //stop currently playing clip
     }
 
+    void LoadVolume()
+    {
+        float masterVolume = PlayerPrefs.GetFloat(MASTER_KEY, 1f);
+        float musicVolume = PlayerPrefs.GetFloat(MUSIC_KEY, 1f);
+        float sfxVolume = PlayerPrefs.GetFloat(SFX_KEY, 1f);
 
+        mixer.SetFloat(VolumeSettings.MIXER_MASTER, Mathf.Log10(masterVolume) * 20);
+        mixer.SetFloat(VolumeSettings.MIXER_MUSIC, Mathf.Log10(musicVolume) * 20);
+        mixer.SetFloat(VolumeSettings.MIXER_SFX, Mathf.Log10(sfxVolume) * 20);
+    }
 
 
 }

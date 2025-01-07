@@ -7,9 +7,11 @@ public class FrontendScript : MonoBehaviour
     {
 
         //stop the current clip
+        LevelManager.instance.StopClip();
+        LevelManager.instance.PlayClip(1);
 
-        //play new one
-        
+
+
     }
 
     // Update is called once per frame
