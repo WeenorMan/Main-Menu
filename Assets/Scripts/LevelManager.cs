@@ -5,6 +5,9 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
+    public AudioClip[] clips;
+    AudioSource audioSource;
+
     private void Awake()
     {
         if (instance == null)
@@ -13,20 +16,29 @@ public class LevelManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             print("do not destroy");
         }
+        else
+        {
+            // Another instance of this gameobject has been made so destroy it
+            // as we already have one
+            print("do destroy");
+            Destroy(gameObject);
+        }
+
     }
 
-    public void LoadMenu()
+    public void PlayClip(int clipNumber)
     {
-        SceneManager.LoadScene(0);
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(clips[clipNumber], 0.7f); // start clip
     }
 
-    public void LoadLevel1()
+    public void StopClip()
     {
-        SceneManager.LoadScene(1);
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Stop(); //stop currently playing clip
     }
 
-    public void LoadLevel2()
-    {
-        SceneManager.LoadScene(2);
-    }
+
+
+
 }
