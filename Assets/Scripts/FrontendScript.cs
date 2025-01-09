@@ -7,8 +7,8 @@ public class FrontendScript : MonoBehaviour
     {
 
         //stop the current clip
-        LevelManager.instance.StopClip();
-        LevelManager.instance.PlayClip(1);
+        LevelManager.instance.StopMusicClip();
+        LevelManager.instance.PlayMusicClip(1);
 
 
 

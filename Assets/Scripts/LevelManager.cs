@@ -9,7 +9,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] AudioMixer mixer;
 
     public AudioClip[] clips;
-    AudioSource audioSource;
+    public AudioSource musicAudioSource;
+    public AudioSource sfxAudioSource;
 
     public const string MASTER_KEY = "Volume";
     public const string MUSIC_KEY = "musicVolume";
@@ -32,19 +33,25 @@ public class LevelManager : MonoBehaviour
         }
 
         LoadVolume();
-
+        PlayMusicClip(1);
     }
 
-    public void PlayClip(int clipNumber)
+    public void PlaySFXClip(int clipNumber)
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(clips[clipNumber], 0.7f); // start clip
+        sfxAudioSource.PlayOneShot(clips[clipNumber]); // start clip
+    }
+    public void PlayMusicClip(int clipNumber)
+    {
+        musicAudioSource.PlayOneShot(clips[clipNumber]); // start clip
     }
 
-    public void StopClip()
+    public void StopSFXClip()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.Stop(); //stop currently playing clip
+        sfxAudioSource.Stop(); //stop currently playing clip
+    }
+    public void StopMusicClip()
+    {
+        musicAudioSource.Stop(); //stop currently playing clip
     }
 
     void LoadVolume()
@@ -57,6 +64,4 @@ public class LevelManager : MonoBehaviour
         mixer.SetFloat(VolumeSettings.MIXER_MUSIC, Mathf.Log10(musicVolume) * 20);
         mixer.SetFloat(VolumeSettings.MIXER_SFX, Mathf.Log10(sfxVolume) * 20);
     }
-
-
 }
