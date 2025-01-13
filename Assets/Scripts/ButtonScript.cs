@@ -32,4 +32,9 @@ public class ButtonScript : MonoBehaviour
         print("vol is now " + vol);
 
     }
+
+    public void PlaySFX( int clip )
+    {
+        LevelManager.instance.PlaySFXClip(clip);
+    }
 }

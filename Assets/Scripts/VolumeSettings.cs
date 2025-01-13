@@ -26,6 +26,8 @@ public class VolumeSettings : MonoBehaviour
         masterSlider.value = PlayerPrefs.GetFloat(LevelManager.MASTER_KEY, 1f);
         musicSlider.value = PlayerPrefs.GetFloat(LevelManager.MUSIC_KEY, 1f);
         sfxSlider.value = PlayerPrefs.GetFloat(LevelManager.SFX_KEY, 1f);
+
+        SetMasterVolume(masterSlider.value);
     }
 
     private void OnDisable()
@@ -35,6 +37,10 @@ public class VolumeSettings : MonoBehaviour
         PlayerPrefs.SetFloat(LevelManager.SFX_KEY, sfxSlider.value);
     }
 
+    void SetMasterVolume(float value)
+    {
+        mixer.SetFloat(MIXER_MASTER, Mathf.Log10(value) * 20);
+    }
     void SetMusicVolume(float value)
     {
         mixer.SetFloat(MIXER_MUSIC, Mathf.Log10(value) * 20);
@@ -42,10 +48,6 @@ public class VolumeSettings : MonoBehaviour
     void SetSFXVolume(float value)
     {
         mixer.SetFloat(MIXER_SFX, Mathf.Log10(value) * 20);
-    }
-    void SetMasterVolume(float value)
-    {
-        mixer.SetFloat(MIXER_MASTER, Mathf.Log10(value) * 20);
     }
 }
 
